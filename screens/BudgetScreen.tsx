@@ -87,7 +87,7 @@ export default function BudgetScreen(): ReactElement {
   async function loadEntries() {
     //Lade einträge aus der tabelle
     const rows = await database.getAllAsync<BudgetEntry>(
-      "SELECT * FROM budgetEntries"
+      "SELECT * FROM budgetEntries WHERE isSynced == 0"
     );
     setBudgetEntries(rows);
     setLoadig(false);
@@ -167,6 +167,8 @@ export default function BudgetScreen(): ReactElement {
       <FlatList
         data={budgetEntries}
         renderItem={({ item }) => <BudgetListItem item={item} />}
+        refreshing={isLoading}
+        onRefresh={loadEntries}
         ItemSeparatorComponent={() => <View style={styles.listSeparator} />}
         ListEmptyComponent={
           <Text style={styles.listEmpty}>Keine Daten geladen</Text>
