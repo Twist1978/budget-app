@@ -15,7 +15,7 @@ export type HomeStackParamList = {
   Budget: undefined;
 };
 
-/* -------- Navigatoren -------- */
+/* -------- Navigation -------- */
 const Tab = createBottomTabNavigator<RootTabsParamList>();
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 

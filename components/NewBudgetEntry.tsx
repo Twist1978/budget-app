@@ -3,9 +3,7 @@ import {
   KeyboardAvoidingView,
   Modal,
   Platform,
-  Pressable,
   StyleSheet,
-  Text,
   TextInput,
 } from "react-native";
 import BigButton from "./BigButton";
@@ -15,7 +13,12 @@ import IconButton from "./IconButton";
 type NewBudgetEntryProps = {
   visible: boolean;
   onCancel: () => void;
-  onSave: () => void;
+  onSave: (
+    seller: string,
+    category: string,
+    amount: number,
+    date: string
+  ) => void;
 };
 
 export default function NewBudgetEntry({
@@ -23,37 +26,45 @@ export default function NewBudgetEntry({
   onCancel,
   onSave,
 }: NewBudgetEntryProps): ReactElement {
-  const [date, setDate] = useState("");
   const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
+  const [seller, setSeller] = useState("");
   const [category, setCategory] = useState("");
 
+  const formatDisplayDate = (d: Date) => {
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = d.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
+  const [date, setDate] = useState(formatDisplayDate(new Date()));
+
   function saveBudgetEntry() {
-    const newAmount = amount.trim();
+    const newAmount =
+      amount.trim() === "" ? 0 : parseFloat(amount.trim().replace(",", "."));
     const newDate = date.trim();
-    const newDescription = description.trim();
+    const newSeller = seller.trim();
     const newCategory = category.trim();
     if (
-      newAmount === "" ||
+      newAmount === 0 ||
       newDate === "" ||
-      newDescription === "" ||
+      newSeller === "" ||
       newCategory === ""
     ) {
       alert("Bitte alle Felder ausfüllen!");
       return;
     }
-    onSave();
+    onSave(newSeller, newCategory, newAmount, newDate);
     setAmount("");
-    setDate("");
-    setDescription("");
+    setDate(formatDisplayDate(new Date()));
+    setSeller("");
     setCategory("");
   }
 
   function cancelEditing() {
     onCancel();
     setAmount("");
-    setDate("");
-    setDescription("");
+    setDate(formatDisplayDate(new Date()));
+    setSeller("");
     setCategory("");
   }
 
@@ -73,8 +84,13 @@ export default function NewBudgetEntry({
           style={styles.back}
         />
         <TextInput
-          placeholder="Datum"
-          onChangeText={setDate}
+          placeholder="Verkäufer"
+          onChangeText={setSeller}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Kategorie"
+          onChangeText={setCategory}
           style={styles.input}
         />
         <TextInput
@@ -83,15 +99,9 @@ export default function NewBudgetEntry({
           style={styles.input}
         />
         <TextInput
-          placeholder="Bezeichnung"
-          onChangeText={setDescription}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Kategorie"
-          onChangeText={setCategory}
-          onSubmitEditing={saveBudgetEntry}
-          returnKeyType="done"
+          placeholder="Datum"
+          value={date}
+          onChangeText={setDate}
           style={styles.input}
         />
         <BigButton
