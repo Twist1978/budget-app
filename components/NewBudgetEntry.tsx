@@ -14,10 +14,11 @@ type NewBudgetEntryProps = {
   visible: boolean;
   onCancel: () => void;
   onSave: (
-    seller: string,
+    vendor: string,
     category: string,
     amount: number,
-    date: string
+    date: string,
+    debitAccount: string
   ) => void;
 };
 
@@ -27,8 +28,9 @@ export default function NewBudgetEntry({
   onSave,
 }: NewBudgetEntryProps): ReactElement {
   const [amount, setAmount] = useState("");
-  const [seller, setSeller] = useState("");
+  const [vendor, setVendor] = useState("");
   const [category, setCategory] = useState("");
+  const [debitAccounnt, setDebitAccount] = useState("");
 
   const formatDisplayDate = (d: Date) => {
     const day = String(d.getDate()).padStart(2, "0");
@@ -42,30 +44,34 @@ export default function NewBudgetEntry({
     const newAmount =
       amount.trim() === "" ? 0 : parseFloat(amount.trim().replace(",", "."));
     const newDate = date.trim();
-    const newSeller = seller.trim();
+    const newVendor = vendor.trim();
     const newCategory = category.trim();
+    const newDebitAccount = debitAccounnt.trim();
     if (
       newAmount === 0 ||
       newDate === "" ||
-      newSeller === "" ||
-      newCategory === ""
+      newVendor === "" ||
+      newCategory === "" ||
+      newDebitAccount === ""
     ) {
       alert("Bitte alle Felder ausfüllen!");
       return;
     }
-    onSave(newSeller, newCategory, newAmount, newDate);
+    onSave(newVendor, newCategory, newAmount, newDate, newDebitAccount);
     setAmount("");
     setDate(formatDisplayDate(new Date()));
-    setSeller("");
+    setVendor("");
     setCategory("");
+    setDebitAccount("");
   }
 
   function cancelEditing() {
     onCancel();
     setAmount("");
     setDate(formatDisplayDate(new Date()));
-    setSeller("");
+    setVendor("");
     setCategory("");
+    setDebitAccount("");
   }
 
   return (
@@ -85,7 +91,7 @@ export default function NewBudgetEntry({
         />
         <TextInput
           placeholder="Verkäufer"
-          onChangeText={setSeller}
+          onChangeText={setVendor}
           style={styles.input}
         />
         <TextInput
@@ -102,6 +108,11 @@ export default function NewBudgetEntry({
           placeholder="Datum"
           value={date}
           onChangeText={setDate}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Konto"
+          onChangeText={setDebitAccount}
           style={styles.input}
         />
         <BigButton

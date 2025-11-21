@@ -1,11 +1,12 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export type BudgetEntry = {
   id?: number;
-  seller: string;
+  vendor: string;
   category: string;
   amount: number;
   date: string;
+  debitAccount: string;
 };
 
 export type BudgetListItemProps = {
@@ -21,12 +22,13 @@ export default function BudgetListItem({ item }: BudgetListItemProps) {
   return (
     <Pressable style={styles.container}>
       <View style={styles.info}>
-        <Text style={styles.seller}>
-          {item.seller} ({item.category})
+        <Text style={styles.vendor}>
+          {item.vendor} ({item.category})
         </Text>
         <Text style={styles.amount}>
           {item.amount} ({item.date})
         </Text>
+        <Text style={styles.amount}>{item.debitAccount}</Text>
       </View>
     </Pressable>
   );
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
   info: {
     justifyContent: "space-evenly",
   },
-  seller: {
+  vendor: {
     fontSize: 20,
   },
   amount: {
