@@ -5,7 +5,6 @@ import {
   StyleSheet,
   View,
   FlatList,
-  ScrollView,
   Text,
 } from "react-native";
 import NewBudgetEntry from "../components/NewBudgetEntry";
@@ -17,10 +16,11 @@ const database = SQLite.openDatabaseSync("budget.db");
 
 type BudgetEntry = {
   id?: number;
-  seller: string;
+  vendor: string;
   category: string;
   amount: number;
   date: string;
+  debitAccount: string;
 };
 
 /**
@@ -43,29 +43,32 @@ export default function BudgetScreen(): ReactElement {
    */
   function initDB() {
     database.runSync(
-      "CREATE TABLE IF NOT EXISTS budgetEntries (id INTEGER PRIMARY KEY NOT NULL, seller TEXT, category TEXT, amount NUMERIC, date TEXT, isSynced NUMERIC);"
+      "CREATE TABLE IF NOT EXISTS budgetEntries (id INTEGER PRIMARY KEY NOT NULL, vendor TEXT, category TEXT, amount NUMERIC, date TEXT, debitAccount TEXT, isSynced NUMERIC);"
     );
   }
 
   /**
    * Save the entry into the database.
    *
-   * @param seller
+   * @param vendor
    * @param category
    * @param amount
    * @param date
+   * @param debitAccount
    */
   async function saveEntry(
-    seller: string,
+    vendor: string,
     category: string,
     amount: number,
     date: string,
+    debitAccount: string,
     newBudgetEntries: {
       id?: number;
-      seller: string;
+      vendor: string;
       category: string;
       amount: number;
       date: string;
+      debitAccount: string;
     }[]
   ) {
     const toDatabaseDate = (date: string): string => {
@@ -74,8 +77,8 @@ export default function BudgetScreen(): ReactElement {
     };
 
     const result = await database.runAsync(
-      "INSERT INTO budgetEntries (seller, category, amount, date, isSynced) VALUES (?,?,?,?,?)",
-      [seller, category, amount, toDatabaseDate(date), 0]
+      "INSERT INTO budgetEntries (vendor, category, amount, date, debitAccount, isSynced) VALUES (?,?,?,?,?,?)",
+      [vendor, category, amount, toDatabaseDate(date), debitAccount, 0]
     );
     newBudgetEntries[newBudgetEntries.length - 1].id = result.lastInsertRowId;
     setBudgetEntries(newBudgetEntries);
@@ -96,26 +99,28 @@ export default function BudgetScreen(): ReactElement {
   /**
    * Add the new budgetEntry.
    *
-   * @param seller
+   * @param vendor
    * @param category
    * @param amount
    * @param date
+   * @param debitAccount
    */
   function addBudgetEntry(
-    seller: string,
+    vendor: string,
     category: string,
     amount: number,
-    date: string
+    date: string,
+    debitAccount: string
   ) {
     setShowNewDialog(false);
 
     const newBudgetEntries = [
       ...budgetEntries,
-      { seller, category, amount, date },
+      { vendor, category, amount, date, debitAccount },
     ];
     setBudgetEntries(newBudgetEntries);
 
-    saveEntry(seller, category, amount, date, newBudgetEntries);
+    saveEntry(vendor, category, amount, date, debitAccount, newBudgetEntries);
   }
 
   /**
