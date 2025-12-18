@@ -1,12 +1,21 @@
-# Ausgaben-App (Expo/React Native) + Laravel/Raspberry Pi Backend
+# Haushaltsetat-Planung
 
-> **Status:** Planung + Initiale App-Struktur · **Ziel:** Offline‑first Erfassung von Ausgaben auf dem Handy, spätere Synchronisation an ein Laravel‑Backend auf dem Raspberry Pi (MySQL).
+End-to-End-Projekt zur privaten Budgetverwaltung.
+
+- React Native App (Eingabe mobil)  
+- Laravel API + MySQL (Persistenz, Auswertung)  
+- Web-View (geplant)
 
 ---
 
-## 1) Projektüberblick
+## 1) Projektüberblick & Zielsetzung
 
-Eine mobile App (Expo + React Native + TypeScript) zum schnellen Erfassen von Ausgaben. Datensätze werden zunächst lokal gespeichert und später – bei Verbindung mit dem Heimnetz – an ein eigenes Backend auf dem Raspberry Pi synchronisiert. Das Backend wird als separates Repository geführt (Laravel + MySQL). Zusätzlich entsteht ein zweiter Dienst in Python (FastAPI), der Beleg‑Fotos mit OCR/LLM verarbeitet und automatisch Felder wie Betrag, Datum und Händler extrahiert.
+Dieses Projekt dient als praxisnahe Arbeitsprobe für eine End-to-End-Architektur aus mobiler App, Backend-API und Datenpersistenz.
+
+Die mobile App (Expo + React Native + TypeScript) ermöglicht das schnelle Erfassen von Ausgaben. Datensätze werden zunächst lokal gespeichert und später an ein Laravel-Backend (MySQL) synchronisiert.
+
+Optional ist ein separater Python-Dienst (FastAPI) vorgesehen, der Beleg-Fotos
+per OCR/LLM verarbeitet und strukturierte Felder extrahiert.
 
 ### Leitprinzipien
 * Offline‑first, zuverlässige Sync‑Strategie
