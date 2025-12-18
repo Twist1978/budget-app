@@ -25,7 +25,7 @@ per OCR/LLM verarbeitet und strukturierte Felder extrahiert.
 
 ### High‑Level‑Architektur
 * Mobile App: Expo + TypeScript, lokaler SQLite‑Speicher, Sync‑Queue, Kamera‑Capture, WLAN‑Erkennung
-* Backend (Repo #2): Laravel 11, MySQL 8, Token‑Auth, REST‑API für Ausgaben
+* Backend (Repo #2): Laravel (aktuelle Version), MySQL 8, Token‑Auth, REST‑API für Ausgaben
 * Beleg‑Service (Repo #3): Python/FastAPI, OCR + LLM‑Extraktion, Callback/Webhook an Laravel
 * Später Web‑Frontend: Reporting, Filter, Export, evtl. Grafana/Metabase oder eigenes UI
 
@@ -74,7 +74,7 @@ Wir verwenden **semantische Versionierung** (`MAJOR.MINOR.PATCH`) und halten das
 ## 3) Tech‑Stack
 
 * **App:** Expo (Managed), React Native, TypeScript, Expo Router (optional), `expo-sqlite` oder `@sqlite.org/sqlite-wasm-expo` (wenn Web geplant), AsyncStorage, Jest + React Testing Library
-* **Backend:** Separates Repository (Laravel 11, MySQL, Raspberry Pi Deployment). Link folgt nach Erstellung.
+* **Backend:** Separates Repository (Laravel (aktuell Version), MySQL, Raspberry Pi Deployment). [Backend-Repository](https://github.com/Twist1978/budget-store)
 
 ---
 
