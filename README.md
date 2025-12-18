@@ -31,7 +31,7 @@ Wir verwenden **semantische Versionierung** (`MAJOR.MINOR.PATCH`) und halten das
 * **v0.1.0 – App Skeleton**: RN + TS Setup, Beispielbildschirm, Basisnavigation, ESLint/Prettier, Unit‑Test‑Setup
 * **v0.2.0 – Eingabe & lokaler Speicher**: Formular „Ausgabe anlegen“, Validierung, SQLite‑Schema, Liste & Detailansicht
 * **v0.3.0 – Sync‑Grundlage**: WLAN‑Heimnetz‑Check, konfigurierbare Base‑URL, Health‑Check, Hintergrund‑Sync manuell
-* **v0.4.0 – Backend MVP**: Laravel Projekt, MySQL Migration „expenses“, API Endpoints (CRUD), Token‑Auth, CORS
+* **v0.4.0 – Backend MVP**: [Backend-Repository](https://github.com/Twist1978/budget-store) Laravel Projekt, MySQL Migration „expenses“, API Endpoints (CRUD), Token‑Auth, CORS
 * **v0.5.0 – Vollständige Synchronisation**: Konfliktstrategie, Delta‑Sync, Retry/Backoff, visuelles Sync‑Log
 * **v0.6.0 – Kategorien & Reports**: Kategorien, Filter, einfache Diagramme, Export CSV
 * **v0.7.0 – Belege/Anhänge + KI‑Extraktion:** Kamera‑Capture, JPEG‑Kompression, Größenlimit (z. B. ≤2 MB), Upload zum Raspberry Pi, Python‑Service (FastAPI) extrahiert Felder via OCR/LLM (Betrag, Datum, Händler, Kategorie‑Vorschlag), Vorschaubilder und Status‑Rückmeldung an App
@@ -258,4 +258,4 @@ HOME_SSID=MeinHeimWLAN
 
 ## 12) Lizenz
 
-Privatprojekt. Lizenzierung wird vor `v1.0.0` festgelegt.
+Privatprojekt.
