@@ -190,21 +190,24 @@ CREATE INDEX IF NOT EXISTS idx_expenses_updated_at ON expenses(updated_at);
 
 ## 6) API‑Vertrag (MVP)
 
-**Base URL:** `http://<raspberry-ip-or-host>/api`
+Die Mobile-App kommuniziert über eine REST-basierte JSON-API.
 
-### Health
+**Base URL:** `/api`
 
-* `GET /health` → `{ status: "ok", service: "expenses", version: "x.y.z" }`
+**Auth**
+- Authorization: Bearer <token>
 
-### Auth
+**Health**
+- GET /health – Der Health-Endpunkt wird für Monitoring und einfache Deploy-Checks verwendet.
 
-* Token‑basiert (z. B. Laravel Sanctum). Token in `Authorization: Bearer <token>`.
-
-### Ausgaben
-
-* `POST /expenses` → Body: obenstehendes Modell ohne `syncStatus`; Server speichert und antwortet mit Server‑`updated_at`.
-* `GET /expenses?since=<ISO8601>` → geänderte Datensätze seit Zeitstempel.
-* `PUT /expenses/{id}` → Update vorhandener Datensätze.
+** API **
+- GET /api/expenses – Liste aller Ausgaben
+- POST /api/expenses – Neue Ausgabe anlegen
+- GET /api/expenses/{id} – Details einer Ausgabe
+- PUT /api/expenses/{id} – Ausgabe bearbeiten
+- DELETE /api/expenses/{id} – Ausgabe löschen
+- GET /api/categories – Liste der Kategorien
+- POST /api/categories – Kategorie anlegen
 
 **Konflikte**
 
