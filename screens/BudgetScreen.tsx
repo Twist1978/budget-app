@@ -31,7 +31,7 @@ type BudgetEntry = {
 export default function BudgetScreen(): ReactElement {
   const [showNewDialog, setShowNewDialog] = useState(false);
   const [budgetEntries, setBudgetEntries] = useState<BudgetEntry[]>([]);
-  const [isLoading, setLoadig] = useState(true);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     initDB();
@@ -93,17 +93,17 @@ export default function BudgetScreen(): ReactElement {
       "SELECT * FROM budgetEntries WHERE isSynced == 0"
     );
     setBudgetEntries(rows);
-    setLoadig(false);
+    setLoading(false);
   }
 
   /**
    * Add the new budgetEntry.
    *
-   * @param vendor
-   * @param category
-   * @param amount
-   * @param date
-   * @param debitAccount
+   * @param vendor The name of the vendor, who is paid.
+   * @param category - The categorie of the venndor like Lebennsmittel and so on.
+   * @param amount - The amount what is paid.
+   * @param date - The date of the invoice
+   * @param debitAccount - From which debit Accout is the amount paid.
    */
   function addBudgetEntry(
     vendor: string,
@@ -124,7 +124,7 @@ export default function BudgetScreen(): ReactElement {
   }
 
   /**
-   *
+   * Remove the entry from database.
    */
   function removeEntryFromDb() {
     // const id: number = budgetEntries[0].id;
@@ -132,7 +132,7 @@ export default function BudgetScreen(): ReactElement {
   }
 
   /**
-   *
+   * Delete the selected entry with an alert message for delete.
    */
   function deleteEntry() {
     Alert.alert(
@@ -178,6 +178,7 @@ export default function BudgetScreen(): ReactElement {
         ListEmptyComponent={
           <Text style={styles.listEmpty}>Keine Daten geladen</Text>
         }
+        keyExtractor={(item) => String(item.id)}
       />
     </View>
   );
